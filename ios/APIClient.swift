@@ -4,6 +4,10 @@ final class APIClient {
     static let shared = APIClient()
     private init() {}
 
+    private let baseURL = URL(string: "http://127.0.0.1:8000")!
+
+    func analyzeCosmetic(barcode: String) async throws -> ProductAnalysisResponse {
+        var components = URLComponents(url: baseURL.appendingPathComponent("cosmetics/analyze"), resolvingAgainstBaseURL: false)
     private let baseURL = URL(string: "http://localhost:8000")!
 
     func fetchAnalysis(for barcode: String) async throws -> ProductAnalysis {
@@ -31,6 +35,7 @@ final class APIClient {
         do {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
+            return try decoder.decode(ProductAnalysisResponse.self, from: data)
             return try decoder.decode(ProductAnalysis.self, from: data)
         } catch {
             throw APIError.decodingFailed

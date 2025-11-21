@@ -1,5 +1,22 @@
 import Foundation
 
+struct IngredientRisk: Identifiable, Codable {
+    let id: UUID = UUID()
+    let inciName: String
+    let function: String
+    let origin: String?
+    let riskLevel: String
+    let concerns: [String]
+    let aiSummary: String
+}
+
+struct ProductAnalysisResponse: Codable {
+    let productName: String
+    let barcode: String
+    let ingredients: [IngredientRisk]
+    let overallScore: String
+    let overallSummary: String
+    let disclaimer: String
 struct IngredientAnalysis: Identifiable, Codable {
     let id: UUID = UUID()
     let name: String
