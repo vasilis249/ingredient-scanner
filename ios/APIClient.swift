@@ -8,6 +8,10 @@ final class APIClient {
 
     func analyzeCosmetic(barcode: String) async throws -> ProductAnalysisResponse {
         var components = URLComponents(url: baseURL.appendingPathComponent("cosmetics/analyze"), resolvingAgainstBaseURL: false)
+    private let baseURL = URL(string: "http://localhost:8000")!
+
+    func fetchAnalysis(for barcode: String) async throws -> ProductAnalysis {
+        var components = URLComponents(url: baseURL.appendingPathComponent("analyze"), resolvingAgainstBaseURL: false)
         components?.queryItems = [URLQueryItem(name: "barcode", value: barcode)]
 
         guard let url = components?.url else {
@@ -32,6 +36,7 @@ final class APIClient {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             return try decoder.decode(ProductAnalysisResponse.self, from: data)
+            return try decoder.decode(ProductAnalysis.self, from: data)
         } catch {
             throw APIError.decodingFailed
         }

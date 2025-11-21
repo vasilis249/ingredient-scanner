@@ -17,6 +17,17 @@ struct ProductAnalysisResponse: Codable {
     let overallScore: String
     let overallSummary: String
     let disclaimer: String
+struct IngredientAnalysis: Identifiable, Codable {
+    let id: UUID = UUID()
+    let name: String
+    let risk: String
+    let details: String
+}
+
+struct ProductAnalysis: Codable {
+    let productName: String
+    let ingredients: [IngredientAnalysis]
+    let overallScore: String
 }
 
 enum APIError: LocalizedError {
